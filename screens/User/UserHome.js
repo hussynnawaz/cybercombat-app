@@ -10,7 +10,7 @@ const UserHome = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/Register.jpeg')}
+        source={require('../../assets/Register.jpeg')}
         style={styles.backgroundImage}
       />
       <View style={styles.overlay}>
@@ -20,7 +20,7 @@ const UserHome = () => {
           <Button
             title="User Login"
             style={styles.button}
-            onPress={() => navigation.navigate('User')}
+            onPress={() => navigation.navigate('UserLogin')}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonWrapper}>

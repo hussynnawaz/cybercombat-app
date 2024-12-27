@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const ExpertLogin = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const auth = getAuth(); // Initialize auth
 
   // Handle Expert Login
   const handleLogin = async () => {
@@ -18,9 +20,9 @@ const ExpertLogin = ({ navigation }) => {
 
     try {
       // Sign in with Firebase Authentication
-      await auth().signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       Alert.alert('Login Successful', 'Welcome back!');
-      navigation.navigate('ExpertHomeScreen'); // Navigate to Expert Home Screen
+      navigation.navigate('ExpertDashboard'); // Navigate to Expert Home Screen
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'Invalid email or password');
@@ -31,7 +33,7 @@ const ExpertLogin = ({ navigation }) => {
 
   // Navigate to Forgot Password Screen
   const handleForgotPassword = () => {
-    navigation.navigate('ForgotPasswordScreen');
+    navigation.navigate('ForgotPassword');
   };
 
   return (

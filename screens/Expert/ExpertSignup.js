@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const ExpertSignup = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -9,7 +9,9 @@ const ExpertSignup = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Create new expert in Firebase Authentication and store expert data in Firestore
+  const auth = getAuth();
+  const db = getFirestore();
+
   const handleSignup = async () => {
     if (!name || !email || !password) {
       Alert.alert('Please fill all fields');
@@ -19,44 +21,22 @@ const ExpertSignup = ({ navigation }) => {
     setLoading(true);
 
     try {
-      // Create user with email and password
-      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Save expert data to Firestore under 'expert' collection
-      await firestore().collection('expert').doc(user.uid).set({
+      await setDoc(doc(db, 'experts', user.uid), {
         name,
         email,
-        createdAt: firestore.FieldValue.serverTimestamp(),
+        createdAt: serverTimestamp(),
       });
 
-      // Send success message to user
       Alert.alert('Account Created Successfully', 'You can now log in.');
-
-      // Navigate to HomeScreen
       navigation.navigate('Home');
-
     } catch (error) {
-      console.error(error);
+      console.error('Error during signup:', error);
       Alert.alert('Error', error.message);
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Handle password reset functionality
-  const handlePasswordReset = async () => {
-    if (!email) {
-      Alert.alert('Please enter your email to reset your password.');
-      return;
-    }
-
-    try {
-      await auth().sendPasswordResetEmail(email);
-      Alert.alert('Password Reset', 'Check your email for password reset instructions.');
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', error.message);
     }
   };
 
@@ -86,8 +66,7 @@ const ExpertSignup = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleSignup} disabled={loading}>
         <Text style={styles.buttonText}>{loading ? 'Signing Up...' : 'Sign Up'}</Text>
       </TouchableOpacity>
-      
-      <TouchableOpacity style={styles.resetLink} onPress={handlePasswordReset}>
+      <TouchableOpacity style={styles.resetLink} onPress={() => navigation.navigate('ForgotPassword')}>
         <Text style={styles.resetText}>Forgot Password?</Text>
       </TouchableOpacity>
     </View>

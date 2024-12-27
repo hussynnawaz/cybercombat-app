@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 const UserLogin = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Handle User Login
+  const auth = getAuth();
+  const db = getFirestore();
+
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Please fill all fields');
@@ -18,19 +20,16 @@ const UserLogin = ({ navigation }) => {
     setLoading(true);
 
     try {
-      // Authenticate with Firebase Authentication
-      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Verify the user exists in Firestore 'users' collection
-      const userDoc = await firestore().collection('users').doc(user.uid).get();
-      if (!userDoc.exists) {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (!userDoc.exists()) {
         throw new Error('No user found with these credentials');
       }
 
       Alert.alert('Login Successful', 'Welcome back!');
-      navigation.navigate('UserHomeScreen'); // Redirect to User Home Screen
-
+      navigation.navigate('UserHomeScreen');
     } catch (error) {
       console.error(error);
       Alert.alert('Error', error.message || 'Login failed');
@@ -39,9 +38,8 @@ const UserLogin = ({ navigation }) => {
     }
   };
 
-
   const handleForgotPassword = () => {
-    navigation.navigate('ForgotPasswordScreen');
+    navigation.navigate('ForgotPassword');
   };
 
   return (
@@ -86,7 +84,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',  },
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold',

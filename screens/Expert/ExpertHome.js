@@ -9,7 +9,7 @@ const ExpertHome = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/Register.jpeg')}
+        source={require('../../assets/Register.jpeg')}
         style={styles.backgroundImage}
       />
       <View style={styles.overlay}>
