@@ -20,7 +20,7 @@ const FightStyle = ({ navigation }) => {
 
       <View style={styles.section}>
         <Image source={require('../../assets/mt.png')} style={styles.sectionImage} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiScreen')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiSplash')}>
           <Text style={styles.buttonText}>Muay Thai</Text>
         </TouchableOpacity>
       </View>

@@ -28,8 +28,14 @@ import Warmup6 from './screens/WarmUp/Warmup6';
 import BoxingBasic from './screens/Boxing/BoxingBasic';
 import BoxingIntermediate from './screens/Boxing/BoxingIntermediate';
 import BoxingAdvanced from './screens/Boxing/BoxingAdvanced';
-
-
+import GetStarted from './screens/GetStarted';
+import MuayThaiSplash from './screens/MuayThai/MuayThaiSplash';
+import MuayThaiCategory from './screens/MuayThai/MuayThaiCategory';
+import MuayThaiBasic from './screens/MuayThai/MuayThaiBasic';
+import MuayThaiIntermediate from './screens/MuayThai/MuayThaiIntermediate';
+import MuayThaiAdvanced from './screens/MuayThai/MuayThaiAdvanced';
+import KickBoxingCategory from './screens/KickBoxing/KickboxingCategory';
+import KickBoxingBasic from './screens/KickBoxing/KickBoxingBasic';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,6 +59,7 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}>
+          <Stack.Screen name="GetStarted" component={GetStarted} />
           <Stack.Screen name="SplashScreen" component={SplashScreen} />
           <Stack.Screen name="UserSignup" component={UserSignup} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
@@ -77,6 +84,13 @@ export default function App() {
           <Stack.Screen name="BoxingBasic" component={BoxingBasic} />
           <Stack.Screen name="BoxingIntermediate" component={BoxingIntermediate} />
           <Stack.Screen name="BoxingAdvanced" component={BoxingAdvanced} />
+          <Stack.Screen name="MuayThaiSplash" component={MuayThaiSplash} />
+          <Stack.Screen name="MuayThaiCategory" component={MuayThaiCategory} />
+          <Stack.Screen name="MuayThaiBasic" component={MuayThaiBasic} />
+          <Stack.Screen name="MuayThaiIntermediate" component={MuayThaiIntermediate} />
+          <Stack.Screen name="MuayThaiAdvanced" component={MuayThaiAdvanced} />
+          <Stack.Screen name="KickBoxingCategory" component={KickBoxingCategory} />
+          <Stack.Screen name="KickBoxingBasic" component={KickBoxingBasic} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

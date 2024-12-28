@@ -1,25 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const KickBoxingCategory = ({ navigation }) => {
+const MuayThaiCategory = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Image source={require('../../assets/kickboxing-bg1.jpg')} style={styles.image} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KickBoxingBasic')}>
+        <Image source={require('../../assets/mtbasic.jpeg')} style={styles.image} />
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiBasic')}>
           <Text style={styles.buttonText}>Basic</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
-        <Image source={require('../../assets/kickboxing-bg2.jpg')} style={styles.image} />
+        <Image source={require('../../assets/mtintermediate.jpeg')} style={styles.image} />
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiIntermediate')}>
           <Text style={styles.buttonText}>Intermediate</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
-        <Image source={require('../../assets/kickboxing-bg3.png')} style={styles.image} />
+        <Image source={require('../../assets/mtadvance.jpeg')} style={styles.image} />
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiAdvanced')}>
           <Text style={styles.buttonText}>Advanced</Text>
         </TouchableOpacity>
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default KickBoxingCategory;
+export default MuayThaiCategory;

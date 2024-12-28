@@ -15,7 +15,7 @@ const KickBoxingSplash = ({ navigation }) => {
       </View>
       <View style={styles.imageContainer}>
         <Image source={require('../../assets/kb-fight-bg.jpg')} style={styles.image} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('BoxingCategory')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KickBoxingCategory')}>
           <Text style={styles.buttonText}>Fight</Text>
         </TouchableOpacity>
       </View>
