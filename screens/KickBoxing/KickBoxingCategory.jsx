@@ -13,7 +13,7 @@ const KickBoxingCategory = ({ navigation }) => {
 
       <View style={styles.section}>
         <Image source={require('../../assets/kickboxing-bg2.jpg')} style={styles.image} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiIntermediate')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KickBoxingIntermediate')}>
           <Text style={styles.buttonText}>Intermediate</Text>
         </TouchableOpacity>
       </View>
@@ -62,5 +62,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',  
   },
 });
-
 export default KickBoxingCategory;

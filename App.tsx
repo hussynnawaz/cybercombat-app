@@ -10,7 +10,7 @@ import ExpertHome from './screens/Expert/ExpertHome';
 import UserSignup from './screens/User/UserSignup';
 import ForgotPassword from './screens/ForgotPassword';
 import ExpertSignup from './screens/Expert/ExpertSignup';
-import UserLogin from './screens/User/UserLogin';
+import UserLogin from './screens/User/UserLogin.jsx';
 import UserHomeScreen from './screens/User/UserHomeScreen';
 import FightStyle from './screens/User/FightStyle';
 import BoxingSplash from './screens/Boxing/BoxingSplash';
@@ -26,16 +26,18 @@ import Warmup4 from './screens/WarmUp/Warmup4';
 import Warmup5 from './screens/WarmUp/Warmup5';
 import Warmup6 from './screens/WarmUp/Warmup6';
 import BoxingBasic from './screens/Boxing/BoxingBasic';
-import BoxingIntermediate from './screens/Boxing/BoxingIntermediate';
 import BoxingAdvanced from './screens/Boxing/BoxingAdvanced';
-import GetStarted from './screens/GetStarted';
+import GetStarted from './screens/GetStarted.jsx';
 import MuayThaiSplash from './screens/MuayThai/MuayThaiSplash';
 import MuayThaiCategory from './screens/MuayThai/MuayThaiCategory';
 import MuayThaiBasic from './screens/MuayThai/MuayThaiBasic';
 import MuayThaiIntermediate from './screens/MuayThai/MuayThaiIntermediate';
 import MuayThaiAdvanced from './screens/MuayThai/MuayThaiAdvanced';
-import KickBoxingCategory from './screens/KickBoxing/KickboxingCategory';
 import KickBoxingBasic from './screens/KickBoxing/KickBoxingBasic';
+import KickBoxingAdvanced from './screens/KickBoxing/KickBoxingAdvanced';
+import KickBoxingIntermediate from './screens/KickBoxing/KickBoxingIntermediate';
+import KickBoxingCategory from './screens/KickBoxing/KickBoxingCategory';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,7 +84,7 @@ export default function App() {
           <Stack.Screen name="Warmup5" component={Warmup5} />
           <Stack.Screen name="Warmup6" component={Warmup6} />
           <Stack.Screen name="BoxingBasic" component={BoxingBasic} />
-          <Stack.Screen name="BoxingIntermediate" component={BoxingIntermediate} />
+          {/* <Stack.Screen name="BoxingIntermediate" component={BoxingIntermediate} /> */}
           <Stack.Screen name="BoxingAdvanced" component={BoxingAdvanced} />
           <Stack.Screen name="MuayThaiSplash" component={MuayThaiSplash} />
           <Stack.Screen name="MuayThaiCategory" component={MuayThaiCategory} />
@@ -91,7 +93,9 @@ export default function App() {
           <Stack.Screen name="MuayThaiAdvanced" component={MuayThaiAdvanced} />
           <Stack.Screen name="KickBoxingCategory" component={KickBoxingCategory} />
           <Stack.Screen name="KickBoxingBasic" component={KickBoxingBasic} />
-        </Stack.Navigator>
+          <Stack.Screen name="KickBoxingAdvanced" component={KickBoxingAdvanced} />
+          <Stack.Screen name="KickBoxingIntermediate" component={KickBoxingIntermediate} />
+                  </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );

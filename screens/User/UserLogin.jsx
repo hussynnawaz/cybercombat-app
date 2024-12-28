@@ -32,7 +32,7 @@ const UserLogin = ({ navigation }) => {
       navigation.navigate('UserHomeScreen');
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', error.message || 'Login failed');
+      Alert.alert('Login failed, Please check your email and password');
     } finally {
       setLoading(false);
     }

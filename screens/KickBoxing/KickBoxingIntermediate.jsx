@@ -4,7 +4,7 @@ import { Video } from 'expo-av';
 import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
-const KickBoxingBasic = () => {
+const KickBoxingIntermediate = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
   const db = getFirestore();
@@ -223,4 +223,4 @@ const styles = StyleSheet.create({
   });
   
 
-export default KickBoxingBasic;
+export default KickBoxingIntermediate;
