@@ -20,7 +20,7 @@ const KickBoxingCategory = ({ navigation }) => {
 
       <View style={styles.section}>
         <Image source={require('../../assets/kickboxing-bg3.png')} style={styles.image} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiAdvanced')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KickBoxingAdvanced')}>
           <Text style={styles.buttonText}>Advanced</Text>
         </TouchableOpacity>
       </View>

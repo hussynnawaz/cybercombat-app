@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import axios from 'axios';  // Import axios for HTTP requests
 
 const ExpertDashboard = ({ navigation }) => {
   const [experts, setExperts] = useState([]);
@@ -17,7 +18,6 @@ const ExpertDashboard = ({ navigation }) => {
         const currentUser = auth.currentUser; // Get the current logged-in expert
 
         if (currentUser) {
-          // Fetch the expert's name from Firestore
           const expertDocRef = doc(db, 'experts', currentUser.uid);
           const expertDoc = await getDoc(expertDocRef);
 
@@ -28,7 +28,6 @@ const ExpertDashboard = ({ navigation }) => {
           }
         }
 
-        // Fetch all experts for the list
         const querySnapshot = await getDocs(collection(db, 'users'));
         const expertsList = querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -45,23 +44,35 @@ const ExpertDashboard = ({ navigation }) => {
     fetchExpertData();
   }, []);
 
-  const renderExpert = ({ item, index }) => {
-    // Convert timestamp to human-readable format
-    const joinDate = new Date(item.createdAt.seconds * 1000).toLocaleDateString();
+  const issueCertificate = async (userId) => {
+    try {
+      const response = await axios.post('http://localhost:5000/issue_cert', {
+        user_id: userId,  // Pass the user ID to the backend
+      });
 
-    return (
-      <View style={[styles.row, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
-        <Text style={styles.cell}>{index + 1}</Text>
-        <Text style={styles.cell}>{item.name}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Progress', { expertId: item.id })}
-        >
-          <Text style={styles.buttonText}>View Progress</Text>
-        </TouchableOpacity>
-      </View>
-    );
+      if (response.data.status === 'success') {
+        alert(response.data.message);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error issuing certificate:', error);
+      alert('An error occurred while issuing the certificate.');
+    }
   };
+
+  const renderExpert = ({ item, index }) => (
+    <View style={[styles.row, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
+      <Text style={styles.cell}>{index + 1}</Text>
+      <Text style={styles.cell}>{item.name}</Text>
+      <TouchableOpacity
+        style={[styles.button, styles.issueButton]}
+        onPress={() => issueCertificate(item.id)} // Call the issueCertificate function
+      >
+        <Text style={styles.buttonText}>Issue Cert</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   if (loading) {
     return (
@@ -73,7 +84,6 @@ const ExpertDashboard = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Dynamic greeting */}
       <Text style={styles.greeting}>Hello, {userName ? userName : 'Expert'}!</Text>
 
       <Text style={styles.title}>Expert Dashboard</Text>
@@ -153,6 +163,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#3498db',
     padding: 10,
     borderRadius: 8,
+    marginVertical: 5,
+  },
+  issueButton: {
+    backgroundColor: '#27ae60', 
   },
   buttonText: {
     color: '#fff',

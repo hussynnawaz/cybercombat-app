@@ -15,6 +15,12 @@ const UserHomeScreen = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Choose your fighting style</Text>
         </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('UploadScreen')}
+        >
+          <Text style={styles.buttonText}>Upload Video</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

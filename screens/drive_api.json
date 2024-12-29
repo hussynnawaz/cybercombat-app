@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "exalted-mode-446120-n1",
+  "private_key_id": "5b0e6ca4bb389df94099fd361c4e12d6d96147b4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDWSABb8/HSmvQV\nyvfyPBWZBgMP8AeU+ZLXGhJY5XKzcAzTJ+foBLcpQf7Q160Wpe4gbv0XiNCY1XxQ\nMiwnYd3aMeA/F0iqFFh8Pc3kaLSfUMwOYO79nQrS4ImpMyTFn1GsVaC+cCTgDzeT\nW5cYtWCdW7h9eOUICHSQh430GqvldYC2U6HoV3xzDjJ0uZ+H5kdRryToaoPeQylb\nXfKZfgsHwFjZqG6Lu2LZ3HDqR3rR9eYwqXfAWyhkbEcjBSwGnx5Rv5Vp6StC2YT2\nxO/AhQvK1DtpeEe9LCYujveBPUQFC2reUEECqI2Qr5VIdbCI4/CkhJ8of7q3BJcB\nFHUxv8r3AgMBAAECggEADvO1OrVZ8WUolQC1rmxs4WGfAxSvosCLc4D5OMTB7S1r\nZ6yILRNvKGzXeAEkrcjkRdUYyfSdAZ0b8IifthvJHDmQuTZJtrx2tCyn2kFIITnF\nE1fGNWIo6DAMywarkTKdw1WyQreWix/ks96XO30kgbZtuCugZ6AXaiJbUGYwCnG4\n2rR5feiiQx9iaMSQL1Q9o1pe42qkDR3zLNpcy5v3Phav7GD0q97/2GWnK+Sbn2Bk\nY9cGHT5h6KjOvER3/l8u0NCNfcLVjYF3V5EE6KRmeIK1KmHmdnMerzTc+oZKk10U\ns02hU8FO12lAs+HabsP2wNXccL4erb5bLA+hyTT7AQKBgQDrneTQxJW5Ogx2IBp+\n93j0tUaZ/Z8Vv9SIk//7XaOBiwuwpLzlGAxn4jNtuZyDLT9AhRMP0gFMC1yfbIw/\nzJu6Pu2s9yUAyLjXWArFQD0x6nHaZl5VvQN09cPbtifN0413zGhqo756hvIoUfC2\nP3F1DKCG4+iOXnVkRMRJt5V5dwKBgQDo0ZlLmqcpg153TDncVGRPx1hZxylIoBVg\n3BsWo/3B21Ett5X+2m04BS39rGXNYPnWTfbrW+CnY0P5m8ITMrnSWxILeYWP1tSq\nNBBLNnsRMMM+aTThd3oxV/GrQBGJlP0wrunC7IKWqh6aE24tBt0nL4IrRIDQNZHH\nLFd0tYSagQKBgQDpzvNjH9Ebz7jR96WTXOxQmRqIcR9Oq9+x8HvS6ub4BA0Dq1Yv\nWJ/m7pbuSYRAv8PGuMdjqZfT6GpvYX4DSX03Yn7kZxP3JTgXqax2dPrE78svWOo/\n1qL5i3BiNO5m14nI2bS8LeU1HXhr/nQJxgdGidM6SCtcK+v+JidKp7zSnQKBgQDi\nXvm4YzTpzkvJnxobOwsV7vPexyFC9jQTK7BDAUy4cvCpjPmRBPxxHcgsALYzTXle\ngAv3qCv1VTVAu8umMwoumFIhShUtWGsK2viEyQI8IreUNWMvXqY22BWotvDWX0EX\nVtr/pksLB3odwYq8yRG7Chx8yWyeBZgqmtimJ+A5AQKBgH+Sow79fOCK3m8/G7j5\nE9dN8txh9gx5cv8yJFHrOTbQrXLsjyVDq/d9L9nouN5kClrIuUaqbYg9QX9TfvdF\nDyu3Hxswx4Z6Bz4oobq7nDdBFMhVnXZIrcqL4pXd3qKtNGD54vEAoARrKyF2ZnPT\nk2K4SjfsTVYKdNXHVPvC1f+B\n-----END PRIVATE KEY-----\n",
+  "client_email": "cybercombat@exalted-mode-446120-n1.iam.gserviceaccount.com",
+  "client_id": "115308692459685583918",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cybercombat%40exalted-mode-446120-n1.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -37,6 +37,11 @@ import KickBoxingBasic from './screens/KickBoxing/KickBoxingBasic';
 import KickBoxingAdvanced from './screens/KickBoxing/KickBoxingAdvanced';
 import KickBoxingIntermediate from './screens/KickBoxing/KickBoxingIntermediate';
 import KickBoxingCategory from './screens/KickBoxing/KickBoxingCategory';
+import BoxingIntermediate from './screens/Boxing/BoxingIntermediate.jsx';
+import ProgressScreen from './screens/ProgressScreen.jsx';
+import UploadScreen from './screens/User/UploadScreen'
+import React from 'react';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -84,7 +89,7 @@ export default function App() {
           <Stack.Screen name="Warmup5" component={Warmup5} />
           <Stack.Screen name="Warmup6" component={Warmup6} />
           <Stack.Screen name="BoxingBasic" component={BoxingBasic} />
-          {/* <Stack.Screen name="BoxingIntermediate" component={BoxingIntermediate} /> */}
+          <Stack.Screen name="BoxingIntermediate" component={BoxingIntermediate} />
           <Stack.Screen name="BoxingAdvanced" component={BoxingAdvanced} />
           <Stack.Screen name="MuayThaiSplash" component={MuayThaiSplash} />
           <Stack.Screen name="MuayThaiCategory" component={MuayThaiCategory} />
@@ -95,6 +100,8 @@ export default function App() {
           <Stack.Screen name="KickBoxingBasic" component={KickBoxingBasic} />
           <Stack.Screen name="KickBoxingAdvanced" component={KickBoxingAdvanced} />
           <Stack.Screen name="KickBoxingIntermediate" component={KickBoxingIntermediate} />
+          <Stack.Screen name="ProgressScreen" component={ProgressScreen} />
+          <Stack.Screen name="UploadScreen" component={UploadScreen} />
                   </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
