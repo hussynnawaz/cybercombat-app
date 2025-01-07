@@ -31,7 +31,7 @@ const ProgressScreen = () => {
   }, []);
 
   const issueCertificate = (userName) => {
-    // Add certificate issuing logic here
+ 
     console.log(`Issuing certificate to ${userName}`);
   };
 
