@@ -1,28 +1,28 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import auth from "firebase/auth";
-import db from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";  // Import getAuth to initialize authentication
+import { getFirestore } from "firebase/firestore";  // Import getFirestore to initialize Firestore
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAULN1ltNJyVES0zKcBhF08fm7fpF77YCM",
-  authDomain: "cybercombat-101c9.firebaseapp.com",
-  projectId: "cybercombat-101c9",
-  storageBucket: "cybercombat-101c9.firebasestorage.app",
-  messagingSenderId: "314375652749",
-  appId: "1:314375652749:web:cda858cae5323b7ee829c4",
-  measurementId: "G-MTSJL4QB8P"
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  databaseURL: FIREBASE_DATABASE_URL,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
+  measurementId: FIREBASE_MEASUREMENT_ID,
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-export {auth, db};
+// Initialize Firebase Auth and Firestore services
+const auth = getAuth(app);  // Initialize authentication
+const db = getFirestore(app);  // Initialize Firestore
+
+// Export auth and db for use in other files
+export { auth, db };
+export default firebaseConfig;
