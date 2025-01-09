@@ -16,7 +16,7 @@ const UserHomeScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Choose your fighting style</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={styles.button}
+          style={styles.uploadButton}
           onPress={() => navigation.navigate('UploadScreen')}
         >
           <Text style={styles.buttonText}>Upload Video</Text>
@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  uploadButton: {
+    marginTop: 20,
+    backgroundColor: '#3498db',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

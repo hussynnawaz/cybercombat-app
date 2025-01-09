@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import store from './redux/store.jsx';
@@ -47,6 +47,7 @@ import ProfileScreen from './components/ProfileScreen';
 import PersonalProgress from './screens/User/PersonalProgress.jsx';
 import ChangePasswordScreen from './components/ChangePasswordScreen.jsx'
 import ProfileSettingsScreen from './components/ProfileSettingsScreen.jsx'
+import IndividualProgressScreen from './screens/User/IndividualProgressScreen.jsx'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,17 +71,14 @@ const HomeTabs = () => (
           iconName = focused ? 'home' : 'home-outline';
         } else if (route.name === 'Profile') {
           iconName = focused ? 'person' : 'person-outline';
-        } else if (route.name === 'Progress') {
-          iconName = focused ? 'bar-chart' : 'bar-chart-outline';
         }
-
         return <Ionicons name={iconName} size={size} color={color} />;
       }
     })}
   >
     <Tab.Screen name="Learn" component={UserHomeScreen} />
-    <Tab.Screen name="Progress" component={PersonalProgress} />
-    <Tab.Screen name="Profile" component={ProfileSettingsScreen} />
+    {/* <Tab.Screen name="Progress" component={PersonalProgress} /> */}
+    <Tab.Screen name="Account" component={ProfileScreen} />
   </Tab.Navigator>
 );
 
@@ -133,7 +131,9 @@ export default function App() {
             <Stack.Screen name="UploadScreen" component={UploadScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-          </Stack.Navigator>
+            <Stack.Screen name="PersonalProgress" component={PersonalProgress }/>
+            <Stack.Screen name="IndividualProgressScreen" component={IndividualProgressScreen} />
+                      </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
     </Provider>

@@ -1,65 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import { Table, Row, Rows } from 'react-native-table-component';
-import { useSelector } from 'react-redux';  // Import useSelector to access Redux store
+import { View, ScrollView, StyleSheet, Alert } from 'react-native';
+import { ActivityIndicator, Text, Card, Divider } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 import { db, auth } from '../../firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, Timestamp } from 'firebase/firestore';
 
 const PersonalProgress = () => {
-  const [tableData, setTableData] = useState([]);
-  const [tableHead] = useState(['Name', 'Email', 'Videos Watched']);
-  const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState('');  // State to store the user's name
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch user data from Redux store
-  const user = useSelector(state => state.user);  // Assuming your Redux store has a `user` slice
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
-    const fetchUsersData = async () => {
+    const fetchUserData = async () => {
       try {
-        const currentUser = auth.currentUser; // Now auth is imported properly
-
+        const currentUser = auth.currentUser;
         if (currentUser) {
-          const usersDocRef = doc(db, 'users', currentUser.uid);
-          const userDoc = await getDoc(usersDocRef);
-
+          const userDocRef = doc(db, 'users', currentUser.uid);
+          const userDoc = await getDoc(userDocRef);
           if (userDoc.exists()) {
-            setUserName(userDoc.data().name || 'User');
+            setUserData(userDoc.data());
           } else {
-            console.log("No such user document!");
+            console.log('No such user document!');
           }
         } else {
-          console.log("No current user");
+          console.log('No current user');
         }
       } catch (error) {
-        console.error("Error fetching user data: ", error);
-        Alert.alert("Error", "Failed to fetch user data.");
+        console.error('Error fetching user data:', error);
+        Alert.alert('Error', 'Failed to fetch user data.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (user) {
-      fetchUsersData();
+    fetchUserData();
+  }, []);
+
+  const formatDate = timestamp => {
+    if (timestamp instanceof Timestamp) {
+      return timestamp.toDate().toLocaleString();
     }
-  }, [user]);  // Depend on `user` to re-fetch data if necessary
+    return 'N/A';
+  };
 
   return (
     <View style={styles.container}>
-      {loading && (
+      {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#3498db" />
-          <Text>Loading data...</Text>
+          <ActivityIndicator animating={true} size="large" color="#3498db" />
+          <Text style={styles.loadingText}>Loading data...</Text>
         </View>
-      )}
-      {!loading && user && tableData.length > 0 && (
-        <>
-          <Text style={styles.greeting}>Hello, {userName ? userName : 'User'}!</Text>
-          <ScrollView horizontal contentContainerStyle={styles.scrollContainer}>
-            <Table borderStyle={styles.tableBorder}>
-              <Row data={tableHead} style={styles.tableHead} textStyle={styles.tableText} />
-              <Rows data={tableData} textStyle={styles.tableText} />
-            </Table>
-          </ScrollView>
-        </>
+      ) : (
+        <ScrollView contentContainerStyle={styles.content}>
+          <Card style={styles.card}>
+            <Card.Title
+              title="Your Progress"
+              titleStyle={styles.cardTitle}
+              style={styles.cardHeader}
+            />
+            <Card.Content>
+              <View style={styles.row}>
+                <Text style={styles.header}>Name:</Text>
+                <Text style={styles.value}>{userData?.name || 'N/A'}</Text>
+              </View>
+              <Divider style={styles.divider} />
+              <View style={styles.row}>
+                <Text style={styles.header}>Videos Watched:</Text>
+                <Text style={styles.value}>{userData?.videosWatched || 'N/A'}</Text>
+              </View>
+              <Divider style={styles.divider} />
+              <View style={styles.row}>
+                <Text style={styles.header}>Certificate Issue Date:</Text>
+                <Text style={styles.value}>{formatDate(userData?.certIssueDate)}</Text>
+              </View>
+              <Divider style={styles.divider} />
+              <View style={styles.row}>
+                <Text style={styles.header}>Issued by Expert:</Text>
+                {/* Uncomment and replace the following line when adding this field */}
+                {/* <Text style={styles.value}>{userData?.expertName || 'N/A'}</Text> */}
+                <Text style={styles.value}>To be added</Text>
+              </View>
+            </Card.Content>
+          </Card>
+        </ScrollView>
       )}
     </View>
   );
@@ -68,42 +92,56 @@ const PersonalProgress = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 10,
     backgroundColor: '#f4f4f4',
-  },
-  scrollContainer: {
-    paddingVertical: 10,
-  },
-  tableBorder: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-  },
-  tableHead: {
-    height: 40,
-    backgroundColor: '#3498db',
-  },
-  tableText: {
-    margin: 6,
-    textAlign: 'center',
-    fontSize: 14,
-    color: '#333',
+    padding: 10,
   },
   loadingContainer: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -50 }, { translateY: -50 }],
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  greeting: {
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#555',
+  },
+  content: {
+    paddingBottom: 20,
+    alignItems: 'center',
+  },
+  card: {
+    margin: 10,
+    elevation: 3,
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#ffffff',
+  },
+  cardHeader: {
+    alignItems: 'center',
+  },
+  cardTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#3498db',
     textAlign: 'center',
+  },
+  row: {
+    flexDirection: 'column',
+    marginVertical: 10,
+  },
+  header: {
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#333',
+  },
+  value: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 5,
+  },
+  divider: {
+    marginVertical: 5,
+    backgroundColor: '#ddd',
   },
 });
 

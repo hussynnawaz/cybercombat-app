@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import axios from 'axios';
+import { Button, DataTable } from 'react-native-paper';
 
 const ExpertDashboard = ({ navigation }) => {
   const [experts, setExperts] = useState([]);
@@ -24,18 +24,18 @@ const ExpertDashboard = ({ navigation }) => {
           if (expertDoc.exists()) {
             setUserName(expertDoc.data().name);
           } else {
-            console.log("No such expert document!");
+            console.log('No such expert document!');
           }
         }
 
         const querySnapshot = await getDocs(collection(db, 'users'));
-        const expertsList = querySnapshot.docs.map(doc => ({
+        const expertsList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setExperts(expertsList);
       } catch (error) {
-        console.error("Error fetching data: ", error);
+        console.error('Error fetching data: ', error);
       } finally {
         setLoading(false);
       }
@@ -44,38 +44,9 @@ const ExpertDashboard = ({ navigation }) => {
     fetchExpertData();
   }, []);
 
-  // const issueCertificate = async (userId) => {
-  //   try {
-  //     const response = await axios.post('http://192.168.24.208:5000/issue_cert', {
-  //       user_id: userId
-  //     });
-  //     alert(response.data.message || 'Certificate issued successfully!');
-  //   } catch (error) {
-  //     console.error('Error issuing certificate:', error);
-  //     if (error.response && error.response.data && error.response.data.message) {
-  //       alert(error.response.data.message);
-  //     } else {
-  //       alert('An error occurred while issuing the certificate.');
-  //     }
-  //   }
-  // };
-
-  const renderExpert = ({ item, index }) => (
-    <View style={[styles.row, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
-      <Text style={styles.cell}>{index + 1}</Text>
-      <Text style={styles.cell}>{item.name}</Text>
-      {/* <TouchableOpacity
-        style={[styles.button, styles.issueButton]}
-        onPress={() => issueCertificate(item.id)}
-      >
-        <Text style={styles.buttonText}>Issue Cert</Text>
-      </TouchableOpacity> */}
-      <TouchableOpacity style={[styles.button, styles.issueButton]} onPress={() => navigation.navigate('ProgressScreen')
-      }>
-        <Text style={styles.buttonText}>View Progress</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  const handleNameClick = (user) => {
+    navigation.navigate('IndividualProgressScreen', { user });
+  };
 
   if (loading) {
     return (
@@ -89,18 +60,30 @@ const ExpertDashboard = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.greeting}>Hello, {userName ? userName : 'Expert'}!</Text>
       <Text style={styles.title}>Expert Dashboard</Text>
-      <View style={styles.table}>
-        <View style={styles.headerRow}>
-          <Text style={[styles.headerCell, styles.cell]}>#</Text>
-          <Text style={[styles.headerCell, styles.cell]}>Name</Text>
-          <Text style={[styles.headerCell, styles.cell]}>Action</Text>
-        </View>
-        <FlatList
-          data={experts}
-          keyExtractor={(item) => item.id}
-          renderItem={renderExpert}
-        />
-      </View>
+
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>#</DataTable.Title>
+          <DataTable.Title>Name</DataTable.Title>
+        </DataTable.Header>
+
+        {experts.map((item, index) => (
+          <DataTable.Row key={item.id} onPress={() => handleNameClick(item)}>
+            <DataTable.Cell>{index + 1}</DataTable.Cell>
+            <DataTable.Cell style={styles.nameCell}>
+              <Text style={styles.nameText}>{item.name}</Text>
+            </DataTable.Cell>
+          </DataTable.Row>
+        ))}
+      </DataTable>
+
+      <Button
+        mode="contained"
+        onPress={() => navigation.navigate('ProgressScreen')}
+        style={styles.button}
+      >
+        View Detailed Progress
+      </Button>
     </View>
   );
 };
@@ -123,56 +106,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  table: {
-    flex: 1,
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 8,
+  nameText: {
+    fontSize: 18,
+    color: '#3498db',
+    textDecorationLine: 'underline',
   },
-  headerRow: {
-    flexDirection: 'row',
-    backgroundColor: '#3498db',
-    padding: 10,
-  },
-  headerCell: {
-    flex: 1,
-    color: '#fff',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  evenRow: {
-    backgroundColor: '#f9f9f9',
-  },
-  oddRow: {
-    backgroundColor: '#ffffff',
-  },
-  cell: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 16,
-    flexWrap: 'wrap',
-    paddingHorizontal: 5,
+  nameCell: {
+    paddingVertical: 10,
   },
   button: {
     backgroundColor: '#3498db',
+    marginTop: 20,
     padding: 10,
     borderRadius: 8,
-    marginVertical: 5,
-  },
-  issueButton: {
-    backgroundColor: '#27ae60',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
   },
 });
 
