@@ -49,7 +49,7 @@ const PersonalProgress = () => {
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator animating={true} size="large" color="#3498db" />
-          <Text style={styles.loadingText}>Loading data...</Text>
+          <Text style={styles.loadingText}>Loading your progress...</Text>
         </View>
       ) : (
         <ScrollView contentContainerStyle={styles.content}>
@@ -77,8 +77,6 @@ const PersonalProgress = () => {
               <Divider style={styles.divider} />
               <View style={styles.row}>
                 <Text style={styles.header}>Issued by Expert:</Text>
-                {/* Uncomment and replace the following line when adding this field */}
-                {/* <Text style={styles.value}>{userData?.expertName || 'N/A'}</Text> */}
                 <Text style={styles.value}>To be added</Text>
               </View>
             </Card.Content>
@@ -92,8 +90,9 @@ const PersonalProgress = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
-    padding: 10,
+    backgroundColor: '#F5F5F5',
+    padding: 20,
+    justifyContent: 'center',
   },
   loadingContainer: {
     flex: 1,
@@ -102,46 +101,52 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginTop: 10,
-    fontSize: 16,
-    color: '#555',
+    fontSize: 18,
+    color: '#3498db',
+    fontWeight: '500',
   },
   content: {
     paddingBottom: 20,
     alignItems: 'center',
   },
   card: {
-    margin: 10,
-    elevation: 3,
-    borderRadius: 10,
-    padding: 10,
+    margin: 15,
+    elevation: 5,
+    borderRadius: 12,
+    padding: 20,
     backgroundColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
   },
   cardHeader: {
-    alignItems: 'center',
+    marginBottom: 15,
   },
   cardTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#3498db',
+    fontSize: 26,
+    fontWeight: '600',
+    color: '#2C3E50',
     textAlign: 'center',
   },
   row: {
     flexDirection: 'column',
-    marginVertical: 10,
+    marginVertical: 12,
   },
   header: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#2C3E50',
   },
   value: {
-    fontSize: 14,
-    color: '#555',
-    marginTop: 5,
+    fontSize: 16,
+    color: '#7F8C8D',
+    marginTop: 6,
+    fontWeight: '400',
   },
   divider: {
-    marginVertical: 5,
-    backgroundColor: '#ddd',
+    marginVertical: 8,
+    backgroundColor: '#BDC3C7',
   },
 });
 

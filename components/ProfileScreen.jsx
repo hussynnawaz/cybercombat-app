@@ -73,7 +73,7 @@ function ProfileScreen() {
       </TouchableRipple>
 
       {/* Progress Card */}
-      <TouchableRipple onPress={() => navigation.navigate('PersonalProgressScreen')} style={styles.card}>
+      <TouchableRipple onPress={() => navigation.navigate('PersonalProgress')} style={styles.card}>
         <Card>
           <Card.Title title="Progress" left={(props) => <IconButton {...props} icon="bar-chart" />} />
         </Card>
