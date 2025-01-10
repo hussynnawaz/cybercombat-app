@@ -18,21 +18,21 @@ const ProfileSettingsScreen = () => {
   const [isNameEditing, setIsNameEditing] = useState(false);
   const [isEmailEditing, setIsEmailEditing] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
-  const [actionType, setActionType] = useState(''); // 'save' or 'delete'
+  const [actionType, setActionType] = useState(''); 
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const firebaseUser = auth.currentUser;
         if (firebaseUser) {
-          const docRef = doc(db, 'users', firebaseUser.uid); // Reference to the 'users' collection using UID
+          const docRef = doc(db, 'users', firebaseUser.uid); 
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             const userData = docSnap.data();
-            setUserName(userData.name); // Set the user's name from Firestore
-            setUserEmail(userData.email); // Set the user's email from Firestore
-            setNewName(userData.name); // Default to Firestore name if available
-            setNewEmail(userData.email); // Default to Firestore email if available
+            setUserName(userData.name); 
+            setUserEmail(userData.email); 
+            setNewName(userData.name); 
+            setNewEmail(userData.email); 
           }
         }
       } catch (error) {
@@ -54,7 +54,7 @@ const ProfileSettingsScreen = () => {
     try {
       const firebaseUser = auth.currentUser;
       if (firebaseUser) {
-        // Reauthenticate the user with the current password
+       
         const credential = EmailAuthProvider.credential(firebaseUser.email, currentPassword);
         await reauthenticateWithCredential(firebaseUser, credential);
 

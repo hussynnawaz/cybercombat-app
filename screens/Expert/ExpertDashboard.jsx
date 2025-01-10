@@ -14,30 +14,44 @@ const ExpertDashboard = ({ navigation }) => {
 
   useEffect(() => {
     const fetchExpertData = async () => {
+      console.log('Starting to fetch expert data...');
       try {
+        // Get the current authenticated user
         const currentUser = auth.currentUser;
+        console.log('Current user:', currentUser);
 
         if (currentUser) {
+          // Get the expert document for the current user
           const expertDocRef = doc(db, 'experts', currentUser.uid);
           const expertDoc = await getDoc(expertDocRef);
+          console.log('Expert document:', expertDoc);
 
+          // Get the name of the current user from the expert document
           if (expertDoc.exists()) {
-            setUserName(expertDoc.data().name);
+            const expertData = expertDoc.data();
+            setUserName(expertData.name);
+            console.log('User name set to:', expertData.name);
           } else {
             console.log('No such expert document!');
           }
         }
 
+        // Get all the users and store them in the experts state
         const querySnapshot = await getDocs(collection(db, 'users'));
         const expertsList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
+          // Get the data from the document snapshot
+          // and spread it into an object
           ...doc.data(),
         }));
         setExperts(expertsList);
+        console.log('Experts data set:', expertsList);
       } catch (error) {
         console.error('Error fetching data: ', error);
       } finally {
+        // Set the loading state to false once the data has been fetched
         setLoading(false);
+        console.log('Fetch expert data completed');
       }
     };
 
@@ -45,10 +59,12 @@ const ExpertDashboard = ({ navigation }) => {
   }, []);
 
   const handleNameClick = (user) => {
+    console.log('Navigating to IndividualProgressScreen with user:', user);
     navigation.navigate('IndividualProgressScreen', { user });
   };
 
   if (loading) {
+    console.log('Loading state...');
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>
@@ -79,7 +95,10 @@ const ExpertDashboard = ({ navigation }) => {
 
       <Button
         mode="contained"
-        onPress={() => navigation.navigate('ProgressScreen')}
+        onPress={() => {
+          console.log('Navigating to ProgressScreen');
+          navigation.navigate('ProgressScreen');
+        }}
         style={styles.button}
       >
         View Detailed Progress

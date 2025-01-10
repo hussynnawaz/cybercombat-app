@@ -1,26 +1,60 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
+/**
+ * This component displays a screen with three sections, each of which
+ * displays a different image and a button with the text "Boxing", "Kick
+ * Boxing", or "Muay Thai". When the button is pressed, the component
+ * navigates to the corresponding screen.
+ */
 const FightStyle = ({ navigation }) => {
+  console.log('navigation: ', navigation);
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Image source={require('../../assets/fight1.png')} style={styles.sectionImage} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('BoxingSplash')}>
+        <Image
+          source={require('../../assets/fight1.png')}
+          style={styles.sectionImage}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            console.log('Boxing button pressed');
+            navigation.navigate('BoxingSplash');
+          }}
+        >
           <Text style={styles.buttonText}>Boxing</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
-        <Image source={require('../../assets/kb.png')} style={styles.sectionImage} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KickBoxingSplash')}>
+        <Image
+          source={require('../../assets/kb.png')}
+          style={styles.sectionImage}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            console.log('KickBoxing button pressed');
+            navigation.navigate('KickBoxingSplash');
+          }}
+        >
           <Text style={styles.buttonText}>Kick Boxing</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
-        <Image source={require('../../assets/mt.png')} style={styles.sectionImage} />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MuayThaiSplash')}>
+        <Image
+          source={require('../../assets/mt.png')}
+          style={styles.sectionImage}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            console.log('MuayThai button pressed');
+            navigation.navigate('MuayThaiSplash');
+          }}
+        >
           <Text style={styles.buttonText}>Muay Thai</Text>
         </TouchableOpacity>
       </View>
