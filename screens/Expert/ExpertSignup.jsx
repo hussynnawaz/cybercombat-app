@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const ExpertSignup = ({ navigation }) => {
@@ -24,14 +24,23 @@ const ExpertSignup = ({ navigation }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Send email verification
+      await sendEmailVerification(user);
+
+      // Save user details in Firestore
       await setDoc(doc(db, 'experts', user.uid), {
         name,
         email,
+        emailVerified: false,
         createdAt: serverTimestamp(),
       });
 
-      Alert.alert('Account Created Successfully', 'You can now log in.');
-      navigation.navigate('Home');
+      Alert.alert(
+        'Account Created Successfully',
+        'A verification email has been sent to your email address. Please verify your email before logging in.'
+      );
+
+      navigation.navigate('Login'); // Navigate to login screen
     } catch (error) {
       console.error('Error during signup:', error);
       Alert.alert('Error', error.message);

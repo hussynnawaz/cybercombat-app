@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice'; // Import the setUser action
+
 
 const UserLogin = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -10,6 +13,7 @@ const UserLogin = ({ navigation }) => {
 
   const auth = getAuth();
   const db = getFirestore();
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -23,16 +27,28 @@ const UserLogin = ({ navigation }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      if (!user.emailVerified) {
+        Alert.alert('Email not verified', 'Please verify your email before logging in.');
+        return;
+      }
+
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (!userDoc.exists()) {
         throw new Error('No user found with these credentials');
       }
 
+      // Dispatch the user info to Redux
+      dispatch(setUser({
+        email: user.email,
+        uid: user.uid,
+        name: userDoc.data().name || '', // Fetch name from Firestore
+      }));
+
       Alert.alert('Login Successful', 'Welcome back!');
       navigation.navigate('UserHomeScreen');
     } catch (error) {
       console.error(error);
-      Alert.alert('Login failed, Please check your email and password');
+      Alert.alert('Login failed', 'Please check your email and password');
     } finally {
       setLoading(false);
     }

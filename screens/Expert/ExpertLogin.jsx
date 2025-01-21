@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch } from 'react-redux'; // Import useDispatch
+import { setExpertLogin } from '../../redux/expertSlice'; // Import the action to dispatch
 
 const ExpertLogin = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch(); // Initialize dispatch
 
-  const auth = getAuth(); // Initialize auth
+  const auth = getAuth();
 
-  // Handle Expert Login
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Please fill all fields');
@@ -19,19 +21,27 @@ const ExpertLogin = ({ navigation }) => {
     setLoading(true);
 
     try {
-      // Sign in with Firebase Authentication
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if email is verified
+      if (!user.emailVerified) {
+        Alert.alert('Email not verified', 'Please verify your email before logging in.');
+        return;
+      }
+
+      console.log(`Logged in user ID: ${user.uid}, Name: ${user.displayName}`);
+      dispatch(setExpertLogin({ email: user.email, uid: user.uid })); // Dispatch action
       Alert.alert('Login Successful', 'Welcome back!');
-      navigation.navigate('ExpertDashboard'); // Navigate to Expert Home Screen
+      navigation.navigate('ExpertDashboard');
     } catch (error) {
-      console.error(error);
+      console.error('Error logging in:', error);
       Alert.alert('Error', 'Invalid email or password');
     } finally {
       setLoading(false);
     }
   };
 
-  // Navigate to Forgot Password Screen
   const handleForgotPassword = () => {
     navigation.navigate('ForgotPassword');
   };

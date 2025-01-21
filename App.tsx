@@ -2,10 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import store from './redux/store.jsx';
+import store from './redux/store'; // Ensure the store is using TypeScript
 import { Ionicons } from '@expo/vector-icons';
 import SplashScreen from './components/SplashScreen';
 import UserHome from './screens/User/UserHome';
@@ -13,7 +13,7 @@ import ExpertHome from './screens/Expert/ExpertHome';
 import UserSignup from './screens/User/UserSignup';
 import ForgotPassword from './components/ForgotPassword';
 import ExpertSignup from './screens/Expert/ExpertSignup';
-import UserLogin from './screens/User/UserLogin.jsx';
+import UserLogin from './screens/User/UserLogin';
 import UserHomeScreen from './screens/User/UserHomeScreen';
 import FightStyle from './screens/User/FightStyle';
 import BoxingSplash from './screens/Boxing/BoxingSplash';
@@ -30,7 +30,7 @@ import Warmup5 from './screens/WarmUp/Warmup5';
 import Warmup6 from './screens/WarmUp/Warmup6';
 import BoxingBasic from './screens/Boxing/BoxingBasic';
 import BoxingAdvanced from './screens/Boxing/BoxingAdvanced';
-import GetStarted from './components/GetStarted.jsx';
+import GetStarted from './components/GetStarted';
 import MuayThaiSplash from './screens/MuayThai/MuayThaiSplash';
 import MuayThaiCategory from './screens/MuayThai/MuayThaiCategory';
 import MuayThaiBasic from './screens/MuayThai/MuayThaiBasic';
@@ -40,14 +40,14 @@ import KickBoxingBasic from './screens/KickBoxing/KickBoxingBasic';
 import KickBoxingAdvanced from './screens/KickBoxing/KickBoxingAdvanced';
 import KickBoxingIntermediate from './screens/KickBoxing/KickBoxingIntermediate';
 import KickBoxingCategory from './screens/KickBoxing/KickBoxingCategory';
-import BoxingIntermediate from './screens/Boxing/BoxingIntermediate.jsx';
-import ProgressScreen from './components/ProgressScreen.jsx';
+import BoxingIntermediate from './screens/Boxing/BoxingIntermediate';
+import ProgressScreen from './components/ProgressScreen';
 import UploadScreen from './screens/User/UploadScreen';
 import ProfileScreen from './components/ProfileScreen';
-import PersonalProgress from './screens/User/PersonalProgress.jsx';
-import ChangePasswordScreen from './components/ChangePasswordScreen.jsx'
-import ProfileSettingsScreen from './components/ProfileSettingsScreen.jsx'
-import IndividualProgressScreen from './screens/User/IndividualProgressScreen.jsx'
+import PersonalProgress from './screens/User/PersonalProgress';
+import ChangePasswordScreen from './components/ChangePasswordScreen';
+import ProfileSettingsScreen from './components/ProfileSettingsScreen';
+import IndividualProgressScreen from './screens/User/IndividualProgressScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,9 +67,9 @@ const HomeTabs = () => (
       tabBarIcon: ({ focused, color, size }) => {
         let iconName: keyof typeof Ionicons.glyphMap = 'home-outline';
 
-        if (route.name === 'Home') {
+        if (route.name === 'Learn') {
           iconName = focused ? 'home' : 'home-outline';
-        } else if (route.name === 'Profile') {
+        } else if (route.name === 'Account') {
           iconName = focused ? 'person' : 'person-outline';
         }
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -77,7 +77,6 @@ const HomeTabs = () => (
     })}
   >
     <Tab.Screen name="Learn" component={UserHomeScreen} />
-    {/* <Tab.Screen name="Progress" component={PersonalProgress} /> */}
     <Tab.Screen name="Account" component={ProfileScreen} />
   </Tab.Navigator>
 );
@@ -131,9 +130,9 @@ export default function App() {
             <Stack.Screen name="UploadScreen" component={UploadScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-            <Stack.Screen name="PersonalProgress" component={PersonalProgress }/>
+            <Stack.Screen name="PersonalProgress" component={PersonalProgress} />
             <Stack.Screen name="IndividualProgressScreen" component={IndividualProgressScreen} />
-                      </Stack.Navigator>
+          </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
     </Provider>

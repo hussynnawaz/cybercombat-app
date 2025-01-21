@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { getAuth, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import firebaseconfig from '../../firebaseConfig';
-
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const UserSignup = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -11,7 +9,6 @@ const UserSignup = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
- 
   const auth = getAuth(); 
   const db = getFirestore();
 
@@ -27,13 +24,17 @@ const UserSignup = ({ navigation }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Save user details in Firestore
       await setDoc(doc(db, 'users', user.uid), {
         name,
         email,
         createdAt: serverTimestamp(),
       });
 
-      Alert.alert('Account Created Successfully', 'You can now log in.');
+      // Send email verification
+      await sendEmailVerification(user);
+      
+      Alert.alert('Account Created Successfully', 'A verification email has been sent to your email address.');
       navigation.navigate('Home'); 
     } catch (error) {
       console.error('Error during signup:', error);
@@ -42,7 +43,6 @@ const UserSignup = ({ navigation }) => {
       setLoading(false);
     }
   };
-
 
   return (
     <View style={styles.container}>
@@ -71,8 +71,8 @@ const UserSignup = ({ navigation }) => {
         <Text style={styles.buttonText}>{loading ? 'Signing Up...' : 'Sign Up'}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.resetLink} onPress={() => navigation.navigate('ForgotPassword')}>
-  <Text style={styles.resetText}>Forgot Password?</Text>
-</TouchableOpacity>
+        <Text style={styles.resetText}>Forgot Password?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
